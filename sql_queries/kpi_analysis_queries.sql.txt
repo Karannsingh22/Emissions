@@ -1,0 +1,20 @@
+-- This file contains KPI queries used to generate
+-- summary cards for dashboard insights.
+
+-- Total greenhouse gas emissions across all regions
+
+SELECT
+SUM(ghg_emissions) AS total_emissions
+FROM emissions_cleaned;
+
+-- Average greenhouse gas emissions
+
+SELECT
+AVG(ghg_emissions) AS average_emissions
+FROM emissions_cleaned;
+
+-- Total number of regions/counties analyzed
+
+SELECT
+COUNT(DISTINCT county_name) AS total_regions
+FROM emissions_cleaned;

@@ -1,0 +1,48 @@
+-- This file contains analytical queries used for
+-- dashboard charts and visualizations.
+
+-- State-wise greenhouse gas emissions analysis
+
+SELECT
+state_abbr,
+SUM(ghg_emissions) AS total_emissions
+FROM emissions_cleaned
+GROUP BY state_abbr
+ORDER BY total_emissions DESC;
+
+-- Population impact on greenhouse gas emissions
+
+SELECT
+county_name,
+population,
+ghg_emissions
+FROM emissions_cleaned;
+
+-- Sector-wise energy consumption analysis
+
+SELECT
+county_name,
+electricity_consumption_mwh,
+gas_consumption_tcf,
+fuel_consumption_gallons
+FROM emissions_cleaned
+LIMIT 20;
+
+-- Top polluting counties based on emissions
+
+SELECT
+county_name,
+state_abbr,
+ghg_emissions
+FROM emissions_cleaned
+ORDER BY ghg_emissions DESC
+LIMIT 10;
+
+-- Transportation activity analysis using vehicle miles
+
+SELECT
+county_name,
+vehicle_miles
+FROM emissions_cleaned
+ORDER BY vehicle_miles DESC
+LIMIT 10;

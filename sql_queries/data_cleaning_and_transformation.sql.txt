@@ -1,0 +1,59 @@
+-- These queries perform data cleaning and transformation
+-- on the raw greenhouse gas emissions dataset.
+-- Numeric columns are cleaned, formatted, and converted
+-- into proper data types for dashboard analysis.
+
+-- Remove existing cleaned table if already present
+
+DROP TABLE IF EXISTS emissions_cleaned;
+
+-- Create transformed table for dashboard reporting
+
+CREATE TABLE emissions_cleaned AS
+SELECT
+state_abbr,
+county_name,
+population,
+employment,
+latitude,
+longitude,
+
+```
+-- Clean greenhouse gas emissions column
+
+TRY_CAST(
+    NULLIF(TRIM(REPLACE(`GHG emissions mtons CO2e`, ',', '')), '-')
+    AS DOUBLE
+) AS ghg_emissions,
+
+-- Clean electricity consumption data
+
+TRY_CAST(
+    NULLIF(TRIM(REPLACE(`consumption (MWh)`, ',', '')), '-')
+    AS DOUBLE
+) AS electricity_consumption_mwh,
+
+-- Clean gas consumption data
+
+TRY_CAST(
+    NULLIF(TRIM(REPLACE(`consumption (TcF)`, ',', '')), '-')
+    AS DOUBLE
+) AS gas_consumption_tcf,
+
+-- Clean transportation activity data
+
+TRY_CAST(
+    NULLIF(TRIM(REPLACE(`vehicle miles traveled (miles)`, ',', '')), '-')
+    AS DOUBLE
+) AS vehicle_miles,
+
+-- Clean fuel consumption data
+
+TRY_CAST(
+    NULLIF(TRIM(REPLACE(`consumption (gallons)`, ',', '')), '-')
+    AS DOUBLE
+) AS fuel_consumption_gallons
+```
+
+FROM emissions_2023
+WHERE county_name IS NOT NULL;
